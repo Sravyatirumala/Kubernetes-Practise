@@ -1,0 +1,180 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red220\green161\blue13;}
+{\*\expandedcolortbl;;\cssrgb\c89412\c68627\c3922;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh14620\viewkind0
+\deftab560
+\pard\pardeftab560\partightenfactor0
+
+\f0\b\fs40 \cf0 AWSCLI\
+\pard\pardeftab560\sa40\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://github.com/Sravyatirumala/Microservice/blob/Infra-Steps/setup-infra.md#awscli"}}{\fldrslt 
+\fs32 \cf2 \
+}}\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"\
+sudo apt install unzip\
+unzip awscliv2.zip\
+sudo ./aws/install\
+aws configure\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 \
+KUBECTL\
+\pard\pardeftab560\sa40\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://github.com/Sravyatirumala/Microservice/blob/Infra-Steps/setup-infra.md#kubectl"}}{\fldrslt \cf2 \
+}}\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl\
+chmod +x ./kubectl\
+sudo mv ./kubectl /usr/local/bin\
+kubectl version --short --client\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 \
+EKSCTL\
+\pard\pardeftab560\sa40\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://github.com/Sravyatirumala/Microservice/blob/Infra-Steps/setup-infra.md#eksctl"}}{\fldrslt \cf2 \
+}}\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp\
+sudo mv /tmp/eksctl /usr/local/bin\
+eksctl version\
+\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+Microservices project :\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+https://github.com/Sravyatirumala/Microservice\
+\
+Create Ec2 instance, jenkins, Kube cluster.\
+\
+In jenkins plugin : Multibranch Scan Webhook trigger plugin.\
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\
+\
+Create Pipeline : Multibranch Pipeline \'97> Git URL \'97> Build Configuration : Jenkinsfile \'97>\
+ Scan Multibranch Pipeline : Scan by Webhook : Sravya  ?  Apply save.\
+\
+http://3.138.66.92:8080/multibranch-webhook-trigger/invoke?token \
+Copy and go to setting : web hooks : Payload URL  http://3.138.66.92:8080/multibranch-webhook-trigger/invoke?token .   Add web hook.  \
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\
+This will run  the pipeline and it willl be successful.\
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+For CD process.\
+\
+Vi service.yml\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 apiVersion: v1\
+kind: ServiceAccount\
+metadata:\
+  name: jenkins\
+  namespace: webapps\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+Kubectl apply -f service.yml \
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\
+Vi role.yml\
+apiVersion: rbac.authorization.k8s.io/v1\
+kind: Role\
+metadata:\
+  name: app-role\
+  namespace: webapps\
+rules:\
+  - apiGroups:\
+        - ""\
+        - apps\
+        - autoscaling\
+        - batch\
+        - extensions\
+        - policy\
+        - rbac.authorization.k8s.io\
+    resources:\
+      - pods\
+      - componentstatuses\
+      - configmaps\
+      - daemonsets\
+      - deployments\
+      - events\
+      - endpoints\
+      - horizontalpodautoscalers\
+      - ingress\
+      - jobs\
+      - limitranges\
+      - namespaces\
+      - nodes\
+      - pods\
+      - persistentvolumes\
+      - persistentvolumeclaims\
+      - resourcequotas\
+      - replicasets\
+      - replicationcontrollers\
+      - serviceaccounts\
+      - services\
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]\
+\
+Kubectl apply -f role.yml \
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\
+Vi bindrole.yml\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 apiVersion: rbac.authorization.k8s.io/v1\
+kind: RoleBinding\
+metadata:\
+  name: app-rolebinding\
+  namespace: webapps \
+roleRef:\
+  apiGroup: rbac.authorization.k8s.io\
+  kind: Role\
+  name: app-role \
+subjects:\
+- namespace: webapps \
+  kind: ServiceAccount\
+  name: jenkins \
+\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 Kubectl apply -f bindlrole.yml \
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+Generate token :\
+\
+Vi  secret.yml\
+\
+apiVersion: v1\
+kind: Secret\
+type: kubernetes.io/service-account-token\
+metadata:\
+  name: mysecretname\
+  annotations:\
+    kubernetes.io/service-account.name: jenkins.  (Given in bindle name)\
+\
+kubectl apply -f secret.yml -n webapps\
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\
+kubectl get all -n webapps\
+\
+kubectl describe secret mysecretname -n webapps.  // To get secret . \
+\
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IlExMlQ3SzZKQVBhNmlkUFUxTUVhWm1GRzk4RHY5U1BTS2NBWnJzY0lRS28ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ3ZWJhcHBzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im15c2VjcmV0bmFtZSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNWE1ZTY3Y2ItOTYxMS00YjM0LTk5NDgtZDk4ZjhmMmFlOWM2Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OndlYmFwcHM6amVua2lucyJ9.ikztrMak0_mIwYYHYRJMLvK7ZlqMp7Tzdl6B7JFbO_ZBdhVCTdk_fI_1qrSi5GRgFLnpnNN_xYj7YY7xd8l-0FXdwCACmocmrimEhojESLQX2HIlqABdqtFa2XOabCvh86xEgpA7pj3zrfKIMEP6ikNZZkl0gA-USx8y5iugTYhhIdu2V5kBrm_nbAEJ3dV1LuS3zTIve79FD_sXU9YbsFNBSWucQYMTRhQQeEaek8Jox2IefRs2VBo3P-JDiY1T4IwOMtVjvCce6AeLMD9Y4O1m5pa99iru3fufoKKb7h627b0eEnbgyKFsqRt7AJ-xwGzozSA04P3fS50Eb7eRkA\
+\
+\
+Keep this token in jenkins \'97> Credentials : k8-token\
+And give cluster end -point URL in Jenkinfile.\
+\
+\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85.\
+\
+\
+\
+}

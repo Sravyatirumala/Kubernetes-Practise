@@ -43,6 +43,8 @@ echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.
 sudo apt-get update\
 sudo apt-get install trivy\
 \
+\
+\
 Or  using shell script.\
  Vi trivy.sh \
 #!/bin/bash\
@@ -298,8 +300,8 @@ sudo vi prometheus.yml\
     static_configs:\
       - targets: ['
 \f3\fs28 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 18.117.196.106
-\f1\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 :9100']\
+18.117.196.106
+\f1\fs26 \kerning1\expnd0\expndtw0 :9100']\
 \
   - job_name: 'jenkins'\
     metrics_path: '/prometheus'\
