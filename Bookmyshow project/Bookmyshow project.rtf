@@ -21,8 +21,9 @@ Security ports:  80,443, 25(SMTP) ,30000-33000 (Kubernetes eks cluster) , 8080(J
 \pard\pardeftab560\slleading20\partightenfactor0
 
 \f1\fs26 \cf0 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\
+\pard\pardeftab560\slleading20\partightenfactor0
 
-\f0\fs24 \
+\f0\fs24 \cf0 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 2. Install docker and login to docker hub:\
 Docker login -u sravyatirumala\
@@ -31,8 +32,9 @@ pass:\
 \pard\pardeftab560\slleading20\partightenfactor0
 
 \f1\fs26 \cf0 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\
+\pard\pardeftab560\slleading20\partightenfactor0
 
-\f0\fs24 \
+\f0\fs24 \cf0 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 3. Install Trivy:\
 \pard\pardeftab560\slleading20\partightenfactor0
@@ -70,13 +72,14 @@ docker images\
  Login to sonarqube. Ip:9000\
 By default username : admin\
                          Pass:admin. We cn change after entering: \
-admin bnmsravya\
+admin \
+sravya\
 \
 Go to Administration \'97> security \'97> users \'97> generate token .\
 This we have to configure in Jenkins.\
 \
 Manage Jenkins \'97> Credentials : Add Secret text.    \
-squ_7f346b7f841fb38f20dbe278f1367ba59670f4b5\
+squ_6c8993f994f0d746764937820fd7322fd13389ca\
 \
 Id: Sonar-token\
 \
@@ -287,8 +290,47 @@ Enable and start Node Exporter:\
 sudo systemctl enable node_exporter\
 sudo systemctl start node_exporter\
 \
+\
+Or:\
+If we get this error:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs28 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 sudo systemctl enable node_exporter Failed to enable unit: Unit file node_exporter.service does not exist.\
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \strokec2 \
+
+\f1\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 Steps:\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 sudo nano /etc/systemd/system/node_exporter.service\
+\
+\
+[Unit]\
+Description=Prometheus Node Exporter\
+Documentation=https://github.com/prometheus/node_exporter\
+\
+[Service]\
+User=nobody\
+Group=nogroup\
+Type=simple\
+ExecStart=/usr/local/bin/node_exporter\
+\
+[Install]\
+WantedBy=multi-user.target\
+\
+sudo systemctl daemon-reload\
+sudo systemctl enable node_exporter\
+sudo systemctl start node_exporter\
+\
+\
+sudo systemctl status node_exporter\
+\
+\
 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\
 23. Configure Prometheus Plugin Integration\
+\
 Integrate Jenkins with Prometheus to monitor the CI/CD pipeline.:\
 \
 Prometheus Configuration::\
@@ -296,21 +338,32 @@ cd /etc/prometheus/ \
 \
 sudo vi prometheus.yml\
 \
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.\
+rule_files:\
+  # - "first_rules.yml"\
+  # - "second_rules.yml"\
+\
+# A scrape configuration containing exactly one endpoint to scrape:\
+# Here it's Prometheus itself.\
+scrape_configs:\
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.\
+  - job_name: "prometheus"\
+    static_configs:\
+      - targets: ["localhost:9090"]\
+\
   - job_name: 'node_exporter'\
     static_configs:\
-      - targets: ['
-\f3\fs28 \expnd0\expndtw0\kerning0
-18.117.196.106
-\f1\fs26 \kerning1\expnd0\expndtw0 :9100']\
+      - targets: ['3.138.66.92:9100']\
 \
   - job_name: 'jenkins'\
     metrics_path: '/prometheus'\
     static_configs:\
-      - targets: ['3.138.66.92:8080\'92]\
+      - targets: ['3.138.66.92:8080']\
 \
 \
 Check the validity of the configuration file:\
 promtool check config /etc/prometheus/prometheus.yml\
+\
 You should see "SUCCESS" when you run the above command, it means every configuration made so far is good.\
 \
 Reload the Prometheus configuration without restarting:\
@@ -358,10 +411,14 @@ Default id and password is "admin"\
 \
 \
 Adding Dashboards in Grafana \
+Once prometheus is added  Click on import dashboard.\
 \
 DateResource \'97> Import dashboard \
 (URL: https://grafana.com/grafana/dashboards/1860-node-exporter-full/) \
-Now add Node Exporter dashboard  \'97> https://grafana.com/grafana/dashboards/1860-node-exporter-full/.  Default link \'97 > Copy to clipboard.\
+Now add Node Exporter dashboard  \'97> https://grafana.com/grafana/dashboards/1860-node-exporter-full/.  \
+Click Default:  give Prometheus url : http://3.138.66.92:9090 (Remove / at the end )\
+Default link \'97 > Copy to clipboard.\
+\
 \
 \
 Lets add another dashboard for Jenkins;\
