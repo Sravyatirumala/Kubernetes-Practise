@@ -171,10 +171,11 @@ sudo -su jenkins\
 \
 13. Aws configure \'97> configure the credentials with access keys.\
 Verify the credentials\
+\
 aws sts get-caller-identity.. sts= simple token service.\
 \
 \
-  Sudo -su jenkins\
+ Sudo -su jenkins\
 aws eks update-kubeconfig --name my-eks-cluster  \'97region us-east-2\
 \
 \'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85\'85..\
@@ -296,12 +297,12 @@ If we get this error:\
 \pard\pardeftab720\partightenfactor0
 
 \f3\fs28 \cf0 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 sudo systemctl enable node_exporter Failed to enable unit: Unit file node_exporter.service does not exist.\
+sudo systemctl enable node_exporter Failed to enable unit: Unit file node_exporter.service does not exist.\
 \pard\pardeftab720\partightenfactor0
 
-\fs24 \cf0 \strokec2 \
+\fs24 \cf0 \
 
-\f1\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 Steps:\
+\f1\fs26 \kerning1\expnd0\expndtw0 Steps:\
 \
 \pard\pardeftab560\slleading20\partightenfactor0
 \cf0 sudo nano /etc/systemd/system/node_exporter.service\
